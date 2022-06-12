@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { createUser } from "../../utils/harperDB/createNewUser";
+import { harperFetchToken } from "../../utils/harperDB/harperFetchToken";
 
 export default async function handler(req, res) {
   const {username, password, repeatPassword} = req.body;
@@ -18,7 +19,10 @@ export default async function handler(req, res) {
       throw new Error(result.error);
     }
     
-    res.status(response.status).json({ data: result });
+    const { operation_token, refresh_token } = await harperFetchToken({username, password});
+    //console.log(token)
+
+    res.status(response.status).json({ data: result, token: operation_token });
   } catch (error) {
     res.status(401).json({ error: error.message });
   }

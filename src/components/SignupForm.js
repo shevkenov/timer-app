@@ -3,12 +3,16 @@ import { LabelAndInput } from './layout/Form';
 import postFormData from "../utils/formData";
 import Button from "./Button";
 import Alert from './Alert';
+import { useRouter } from "next/router";
+import { useUserContext } from '../context/userContext';
 
 const SignupForm = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [repeatPassword, setRepeatPassword] = useState("");
     const [error, setError] = useState("");
+    const router = useRouter();
+    const user = useUserContext();
 
     const handleSubmit = async(e) => {
         setError("");
@@ -21,9 +25,13 @@ const SignupForm = () => {
         const response = await postFormData({data: credentials, url: "/api/signup", method: "POST"})
         if(response.error){
           setError(response.error);
+
+          return;
         }
-        console.log(response);
-        
+
+        localStorage.setItem("token", response.token);
+        user.setUsername(username);
+        router.push("/login");
     }
 
   return (
