@@ -31,7 +31,7 @@ const SignupForm = () => {
 
         localStorage.setItem("token", response.token);
         user.setUsername(username);
-        router.push("/login");
+        router.push("/");
     }
 
   return (
