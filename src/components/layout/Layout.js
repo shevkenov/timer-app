@@ -5,8 +5,8 @@ import Navbar from './Navbar'
 const Layout = ({children}) => {
   return (
     <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex flex-col grow">
+        <Navbar/>
+        <main className="flex flex-col grow justify-center items-center">
             {children}
         </main>
         <Footer />
