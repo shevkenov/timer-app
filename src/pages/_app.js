@@ -1,14 +1,17 @@
 import Layout from "../components/layout/Layout";
-import { Provider } from "../context/userContext";
+import TasksProvider from "../context/tasksContext";
+import { UserProvider } from "../context/userContext";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Provider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </Provider>
+    <UserProvider>
+      <TasksProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </TasksProvider>
+    </UserProvider>
   );
 }
 

@@ -1,14 +1,17 @@
+import Taskbar from "../components/Taskbar";
+import { useTaskContext } from "../context/tasksContext";
 import { useUserContext } from "../context/userContext"
 import useTasks from "../hooks/useTasks";
 
 export default function Home() {
   const {user} = useUserContext();
+  const {addTask} = useTaskContext();
 
-  //const tasks = useTasks();
+  const {tasks} = useTasks();
   return (
     <>
       {user?.username && `You are loged in as ${user?.username}` }
-      <h1>Hello World</h1>
+      <Taskbar tasks={tasks} addTask={addTask}/>
     </>
   )
 }
