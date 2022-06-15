@@ -23,15 +23,20 @@ export const LabelAndInput = ({
     inputName,
     handleChange,
     value,
+    placeHolder,
+    extraClasses
   }) => {
+    const classes = "px-3 py-2 border-gray-200 border-2 rounded " + extraClasses
+
     return (
       <input
-        className="px-3 py-2 border-gray-200 border-2 rounded"
+        className={classes}
         type={inputType}
         name={inputName}
         id={inputName}
         onChange={handleChange}
         value={value}
+        placeholder={placeHolder}
       />
     )
   }
