@@ -16,8 +16,8 @@ export const useUser = () => {
                 setUsername(result.user)
             }
         }
-
+        
     },[]);
-
-    return {username, setUsername};
+    
+    return {user: username, setUser: setUsername};
 }

@@ -2,11 +2,11 @@ import Link from "next/link";
 import { useUserContext } from "../../context/userContext";
 
 const Navbar = () => {
-  const { username, setUsername } = useUserContext();
+  const { user, setUser } = useUserContext();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setUsername("");
+    setUser("");
   };
   return (
     <header className="flex justify-between items-center bg-green-600 text-white py-4 px-4">
@@ -16,7 +16,7 @@ const Navbar = () => {
         </Link>
       </h2>
       <nav className="flex items-center">
-        {!username ? (
+        {!user ? (
           <>
             <Link href="/login">
               <a className="ml-8 text-lg">Login</a>

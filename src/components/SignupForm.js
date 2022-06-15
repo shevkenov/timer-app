@@ -29,9 +29,9 @@ const SignupForm = () => {
           return;
         }
 
-        localStorage.setItem("token", response.token);
-        user.setUsername(username);
-        router.push("/");
+        //localStorage.setItem("token", response.token);
+        
+        router.push("/login");
     }
 
   return (
