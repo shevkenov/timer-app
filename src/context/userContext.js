@@ -7,7 +7,7 @@ const UserContext = createContext({
     setUsername: (username) => {}
 });
 
-export const Provider = ({children}) => {
+export const UserProvider = ({children}) => {
     //const [username, setUsername] = useState("");
     const {user, setUser} = useUser();
 
