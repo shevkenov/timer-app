@@ -19,10 +19,10 @@ export default async function handler(req, res) {
       throw new Error(result.error);
     }
     
-    const { operation_token, refresh_token } = await harperFetchToken({username, password});
+    //const { operation_token, refresh_token } = await harperFetchToken({username, password});
     //console.log(token)
 
-    res.status(response.status).json({ data: result, token: operation_token });
+    res.status(response.status).json({ data: result });
   } catch (error) {
     res.status(401).json({ error: error.message });
   }

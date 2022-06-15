@@ -1,4 +1,5 @@
 import { harperFetchToken } from "../../utils/harperDB/harperFetchToken";
+import { harperGetUserInfo } from "../../utils/harperDB/harperGetUserInfo";
 
 export default async function handler(req, res) {
     const {username, password} = req.body;
@@ -14,7 +15,13 @@ export default async function handler(req, res) {
             throw new Error('Invalid credentials!')
         }
 
-        res.status(200).json({token})
+        const {result, response} = await harperGetUserInfo(token);
+        
+        if(response.status !== 200){
+            throw new Error('Something went wrong')
+        }
+
+        res.status(response.status).json({token, user: result})
     } catch (error) {
         res.status(401).json({error: error.message})
     }
