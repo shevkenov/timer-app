@@ -1,4 +1,5 @@
-import React, { useState, useId } from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { useUserContext } from "../context/userContext";
 import postFormData from "../utils/formData";
 import Button from "./Button";
@@ -7,11 +8,27 @@ import { Input } from "./layout/Form";
 const Taskbar = ({ tasks, addTask }) => {
   const [newTask, setNewTask] = useState("");
   const [isNewTaskEnabled, setIsNewTaskEnabled] = useState(false);
+  const [taskChoosen, setTaskChoozen] = useState("-- Choose a task --")
   const {user} = useUserContext();
+  const router = useRouter();
 
   const handleChange = (e) => {
     setNewTask(e.target.value);
   };
+
+  const handleSelect = (e) => {
+    if(!e.target.value) return;
+
+    setTaskChoozen(e.target.value);
+  }
+
+  const handleClick = () => {
+    if(!user){
+      router.push("/login");
+      return;
+    }
+    setIsNewTaskEnabled(true);
+  }
 
   const addNewTask = async() => {
     const token = localStorage.getItem("token");
@@ -32,14 +49,14 @@ const Taskbar = ({ tasks, addTask }) => {
     <div>
       {!isNewTaskEnabled ? (
         <>
-          <select className="mr-4 p-2 border" name="task" id="task">
-            <option disabled hidden value="">
+          <select className="mr-4 p-2 border" name="task" id="task" value={taskChoosen} onChange={handleSelect}>
+            <option value="">
               -- Choose a task --
             </option>
             {tasks.length &&
               tasks.map((task) => {
                 return (
-                  <option key={task.id} value={task.task_name}>
+                  <option key={task.id} value={task.id}>
                     {task.task_name}
                   </option>
                 );
@@ -49,7 +66,7 @@ const Taskbar = ({ tasks, addTask }) => {
           <Button
             color="primary"
             extraClasses="mx-1"
-            handleClick={() => setIsNewTaskEnabled(true)}
+            handleClick={handleClick}
           >
             New Task
           </Button>

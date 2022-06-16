@@ -1,12 +1,15 @@
 import Link from "next/link";
+import { useTaskContext } from "../../context/tasksContext";
 import { useUserContext } from "../../context/userContext";
 
 const Navbar = () => {
   const { user, setUser } = useUserContext();
+  const {tasks, setTaskList} = useTaskContext(); 
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setUser("");
+    setTaskList([]);
   };
   return (
     <header className="flex justify-between items-center bg-green-600 text-white py-4 px-4">
