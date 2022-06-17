@@ -12,8 +12,9 @@ export const useUser = () => {
         }
         async function tryToLogin(token){
             const result = await postFormData({url: "/api/user-info", method:"POST", data: token});
+
             if(result){
-                setUsername(result.user)
+                setUsername({...result.user, token})
             }
         }
         

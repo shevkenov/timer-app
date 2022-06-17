@@ -5,8 +5,8 @@ import { useUserContext } from "../context/userContext"
 import useTasks from "../hooks/useTasks";
 
 export default function Home() {
-  const {user} = useUserContext();
-  const {addTask} = useTaskContext();
+  const { user } = useUserContext();
+  const { addTask } = useTaskContext();
 
   const {tasks} = useTasks();
   return (

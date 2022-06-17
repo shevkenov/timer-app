@@ -8,7 +8,7 @@ import { Input } from "./layout/Form";
 const Taskbar = ({ tasks, addTask }) => {
   const [newTask, setNewTask] = useState("");
   const [isNewTaskEnabled, setIsNewTaskEnabled] = useState(false);
-  const [taskChoosen, setTaskChoozen] = useState("-- Choose a task --")
+  const [taskChoosen, setTaskChoosen] = useState("-- Choose a task --")
   const {user} = useUserContext();
   const router = useRouter();
 
@@ -19,7 +19,7 @@ const Taskbar = ({ tasks, addTask }) => {
   const handleSelect = (e) => {
     if(!e.target.value) return;
 
-    setTaskChoozen(e.target.value);
+    setTaskChoosen(e.target.value);
   }
 
   const handleClick = () => {
@@ -31,12 +31,10 @@ const Taskbar = ({ tasks, addTask }) => {
   }
 
   const addNewTask = async() => {
-    const token = localStorage.getItem("token");
-
     try {
-      const result = await postFormData({url: "/api/add-task", method:"POST", data: {newTask, username: user.username, token}});
+      const result = await postFormData({url: "/api/add-task", method:"POST", data: {newTask, username: user.username, token: user.token}});
       if(result.result){
-        addTask(newTask);
+        addTask({task_name: newTask, id: result.result.inserted_hashes[0]});
         setIsNewTaskEnabled(false);
         setNewTask("")
       }

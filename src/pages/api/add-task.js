@@ -9,7 +9,6 @@ export default async function handler(req, res) {
         }
 
         const result = await createNewTask({username, newTask, token})
-
         res.status(200).json({result})
     } catch (error) {
         res.status(401).json({error})
