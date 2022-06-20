@@ -3,9 +3,10 @@ import React, { createContext, useState, useContext, useCallback } from "react";
 const TaskContext = createContext({
   tasks: [],
   setTaskList: () => {},
-  addTask: () => {},
-  updateTask: () => {},
-  taskId: null
+  addTask: (newTask) => {},
+  updateTask: (taskId) => {},
+  taskId: null,
+  setTaskId: (taskId) => {}
 });
 
 const TasksProvider = ({ children }) => {
@@ -22,21 +23,25 @@ const TasksProvider = ({ children }) => {
       time_in_seconds: 0,
     }
 
-    console.log(task)
     setTask(prevValue => [...prevValue, task])
   };
 
+  const setTaskChoosen = (id) => {
+    const taskFound = tasks.find(t => t.id === id);
+    setTaskId(taskFound);
+  }
+
   const updateTask = ({id, seconds}) => {
     const taskFound = tasks.find(t => t.id === id);
-    const inxFound = tasks.indexOf(t => t.id === id);
+    const inxFound = tasks.findIndex(t => t.id === id);
     taskFound.time_in_seconds += seconds;
-    
-    setTaskList(prevVal => [...prevVal.slice(0, inxFound), ...prevVal.slice(inxFound+1, prevVal.length), taskFound]);
+
+    setTask(prevVal => [...prevVal.slice(0, inxFound), ...prevVal.slice(inxFound+1, prevVal.length), taskFound]);
   }
 
 
   return (
-    <TaskContext.Provider value={{ tasks, setTaskList, addTask, updateTask, taskId, setTaskId }}>
+    <TaskContext.Provider value={{ tasks, setTaskList, addTask, updateTask, taskId, setTaskChoosen }}>
       {children}
     </TaskContext.Provider>
   );

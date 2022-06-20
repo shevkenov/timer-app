@@ -6,14 +6,17 @@ import useTasks from "../hooks/useTasks";
 
 export default function Home() {
   const { user } = useUserContext();
-  const { addTask } = useTaskContext();
+  const { addTask, setTaskChoosen, taskId, updateTask } = useTaskContext();
 
   const {tasks} = useTasks();
+
   return (
     <>
       {user?.username && `You are loged in as ${user?.username}` }
-      <Taskbar tasks={tasks} addTask={addTask}/>
-      <Timer />
+      <Taskbar tasks={tasks} addTask={addTask} setTask={setTaskChoosen}/>
+      {
+        taskId && <Timer updateTask={updateTask} taskId={taskId}/>
+      }
     </>
   )
 }

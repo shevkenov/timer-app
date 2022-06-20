@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useUserContext } from "../context/userContext";
 import postFormData from "../utils/formData";
 import Button from "./Button";
 import { Input } from "./layout/Form";
+import useTimer from "../hooks/useTimer";
 
-const Taskbar = ({ tasks, addTask }) => {
+const Taskbar = ({ tasks, addTask, setTask }) => {
   const [newTask, setNewTask] = useState("");
   const [isNewTaskEnabled, setIsNewTaskEnabled] = useState(false);
-  const [taskChoosen, setTaskChoosen] = useState("-- Choose a task --")
+  const [taskChoosen, setTaskChoosen] = useState()
   const {user} = useUserContext();
   const router = useRouter();
+  const { timerOn } = useTimer();
 
   const handleChange = (e) => {
     setNewTask(e.target.value);
@@ -20,6 +22,7 @@ const Taskbar = ({ tasks, addTask }) => {
     if(!e.target.value) return;
 
     setTaskChoosen(e.target.value);
+    setTask(e.target.value);
   }
 
   const handleClick = () => {
@@ -43,11 +46,15 @@ const Taskbar = ({ tasks, addTask }) => {
     }
   }
 
+  useEffect(() => {
+    console.log(timerOn)
+  }, [timerOn])
+
   return (
     <div>
       {!isNewTaskEnabled ? (
         <>
-          <select className="mr-4 p-2 border" name="task" id="task" value={taskChoosen} onChange={handleSelect}>
+          <select className="mr-4 p-2 border" name="task" id="task" disabled={timerOn} value={taskChoosen} onChange={handleSelect}>
             <option value="">
               -- Choose a task --
             </option>

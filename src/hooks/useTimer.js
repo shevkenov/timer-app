@@ -1,7 +1,11 @@
 import { useRef, useEffect, useState } from "react";
+import { useTaskContext } from "../context/tasksContext";
 
 export default function useTimer() {
     const timerRef = useRef();
+    const taskRef = useRef();
+    const { taskId } = useTaskContext();
+
     const [counter, setCounter] = useState(1);
     const [minutes, setMinutes] = useState(0);
     const [hours, setHours] = useState(0);
@@ -14,7 +18,18 @@ export default function useTimer() {
     }
 
     useEffect(() => {
+        if(taskRef.current && taskRef.current?.id !== taskId?.id){
+            setCounter(0);
+            setSeconds(0);
+            setMinutes(0);
+            setHours(0);
+        }
+        
+    },[taskId])
+
+    useEffect(() => {
         if(!timerOn) return
+        taskRef.current = taskId
         timerRef.current = setInterval(() => {
             setCounter(prevVal => prevVal === 86400 ? 0 : ++prevVal)
             setSeconds(counter % 60);
@@ -25,5 +40,5 @@ export default function useTimer() {
         return () => clearInterval(timerRef.current);
     },[seconds, timerOn, counter])
 
-    return {seconds, minutes, hours, pauseTimer, timerOn}
+    return {seconds, minutes, hours, pauseTimer, timerOn, counter, setCounter}
 }

@@ -9,8 +9,6 @@ export default function useTasks() {
     
     useEffect(() => {
         if(!user) return
-        
-        //const token = localStorage.getItem("token");
 
         const getTasks = async() => {
             const {result} = await postFormData({method: "POST", url: "/api/fetch-tasks", data: {username: user.username, token: user.token}})

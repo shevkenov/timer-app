@@ -6,7 +6,7 @@ export default async function harperFetchTasks({username, token}) {
 
   var raw = JSON.stringify({
     "operation": "sql",
-    "sql": `SELECT * FROM productivity_timer.tasks WHERE username="${username}"`,
+    "sql": `SELECT * FROM productivity_timer.tasks WHERE username="${username}" order by __createdtime__ desc`,
   });
 
   var requestOptions = {

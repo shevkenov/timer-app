@@ -1,3 +1,5 @@
+import postFormData from "../formData";
+
 export default async function harperSaveTimer({seconds, taskId, token}) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -17,7 +19,9 @@ export default async function harperSaveTimer({seconds, taskId, token}) {
 
   try {
       const response = await fetch(process.env.DB_URL, requestOptions);
-      console.log(response);
+      const result = await response.json();
+
+      return {response, result};
   } catch (error) {
       console.log("error", error);
   }
