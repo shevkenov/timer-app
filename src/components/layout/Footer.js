@@ -7,7 +7,7 @@ const Footer = () => {
             Super Simple Task Timer ©
         </h3>
         <p className='text-lg'>
-            Designed and developed by Danny Adams
+            Developed by Andrey Shevkenov
         </p>
     </footer>
   )

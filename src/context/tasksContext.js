@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useCallback } from "react";
+import postFormData from "../utils/formData";
 
 const TaskContext = createContext({
   tasks: [],
@@ -6,7 +7,8 @@ const TaskContext = createContext({
   addTask: (newTask) => {},
   updateTask: (taskId) => {},
   taskId: null,
-  setTaskId: (taskId) => {}
+  setTaskId: (taskId) => {},
+  removeTask: (taskId) => {},
 });
 
 const TasksProvider = ({ children }) => {
@@ -39,9 +41,20 @@ const TasksProvider = ({ children }) => {
     setTask(prevVal => [...prevVal.slice(0, inxFound), ...prevVal.slice(inxFound+1, prevVal.length), taskFound]);
   }
 
+  const removeTask = async({id, token}) => {
+    
+    try {
+      const {result} = await postFormData({url: "/api/removeTask", data: {id, token}, method:"post"});
+
+      const inxFound = tasks.findIndex(t => t.id === result.deleted_hashes[0]);
+      setTask(prevVal => [...prevVal.slice(0, inxFound), ...prevVal.slice(inxFound+1, prevVal.length)]);
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
-    <TaskContext.Provider value={{ tasks, setTaskList, addTask, updateTask, taskId, setTaskChoosen }}>
+    <TaskContext.Provider value={{ tasks, setTaskList, addTask, updateTask, taskId, setTaskChoosen, removeTask }}>
       {children}
     </TaskContext.Provider>
   );

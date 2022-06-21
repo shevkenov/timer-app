@@ -33,7 +33,7 @@ const Navbar = () => {
             <Link href="/">
                 <a className="ml-8 text-lg">Timer</a>
             </Link>
-            <Link href="/stats">
+            <Link href="/status">
             <a className="ml-8 text-lg">Status</a>
             </Link>
             <button className="ml-8 text-lg border rounded py-1 px-3 hover:bg-green-700" onClick={handleLogout}>Log out</button>

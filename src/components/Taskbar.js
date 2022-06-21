@@ -12,7 +12,6 @@ const Taskbar = ({ tasks, addTask, setTask }) => {
   const [taskChoosen, setTaskChoosen] = useState()
   const {user} = useUserContext();
   const router = useRouter();
-  const { timerOn } = useTimer();
 
   const handleChange = (e) => {
     setNewTask(e.target.value);
@@ -46,15 +45,11 @@ const Taskbar = ({ tasks, addTask, setTask }) => {
     }
   }
 
-  useEffect(() => {
-    console.log(timerOn)
-  }, [timerOn])
-
   return (
     <div>
       {!isNewTaskEnabled ? (
         <>
-          <select className="mr-4 p-2 border" name="task" id="task" disabled={timerOn} value={taskChoosen} onChange={handleSelect}>
+          <select className="mr-4 p-2 border" name="task" id="task" value={taskChoosen} onChange={handleSelect}>
             <option value="">
               -- Choose a task --
             </option>
